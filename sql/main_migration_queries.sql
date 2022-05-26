@@ -51,6 +51,11 @@ FROM wp_terms te
 LEFT  JOIN wp_term_taxonomy ta ON ta.term_id = te.term_id
 WHERE ta.term_id IS NULL;
 
+INSERT  INTO  `wp_term_relationships` ( object_id, term_taxonomy_id, term_order ) 
+SELECT  DISTINCT id_noticia, term_id, 0
+FROM noticias_autores na, wp_terms wt
+WHERE term_group = id_autor;
+
 
 INSERT  INTO wp_termmeta(  `term_id` ,  `meta_key` ,  `meta_value`  )
 SELECT term_id, "twitter", twitter

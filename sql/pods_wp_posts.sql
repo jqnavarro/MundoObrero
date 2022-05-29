@@ -27,3 +27,13 @@ INSERT INTO `wp_posts` (`post_author`, `post_date`, `post_date_gmt`, `post_conte
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+update wp_posts wp1
+inner join wp_posts wp2
+on wp2.post_excerpt = wp1.post_parent
+and wp1.post_type like '_pods%' and wp2.post_type like '_pods%'
+set wp1.post_parent = wp2.ID;
+
+update wp_posts
+set post_excerpt = ''
+where post_type like '_pods%';

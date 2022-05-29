@@ -25,3 +25,16 @@ SELECT term_id, "twitter", twitter
 FROM `wp_terms` wp, autores mo
 WHERE id_autor = term_group
 AND twitter IS NOT NULL;
+
+
+-- ## Contador de posts en categorias - Reset
+UPDATE wp_term_taxonomy SET count = (
+SELECT COUNT(*) FROM wp_term_relationships rel 
+    LEFT JOIN wp_posts po ON (po.ID = rel.object_id) 
+    WHERE 
+        rel.term_taxonomy_id = wp_term_taxonomy.term_taxonomy_id 
+        AND 
+        wp_term_taxonomy.taxonomy NOT IN ('link_category')
+        AND 
+        po.post_status IN ('publish', 'future')
+);

@@ -26,15 +26,19 @@ INSERT  INTO  `wp_term_relationships` (  `object_id` ,  `term_taxonomy_id` ,  `t
 SELECT DISTINCT  sid, seccion, 0
 FROM mo_noticias
 
+-- ## Libros
 
--- ## Contador de posts en categorias - Reset
-UPDATE wp_term_taxonomy SET count = (
-SELECT COUNT(*) FROM wp_term_relationships rel 
-    LEFT JOIN wp_posts po ON (po.ID = rel.object_id) 
-    WHERE 
-        rel.term_taxonomy_id = wp_term_taxonomy.term_taxonomy_id 
-        AND 
-        wp_term_taxonomy.taxonomy NOT IN ('link_category')
-        AND 
-        po.post_status IN ('publish', 'future')
-);
+update wp_posts
+join (
+SELECT id_noticia, id_libro, CONCAT('<div id="libros"><p>
+              <img src="http://test.mundoobrero.es/wp-content/uploads/img/libros/',imagen,'" class="attachment-thumbnail size-thumbnail" width="108" height="150">
+                      <span class="titulo">',titulo,'</span>
+                                <span class="autor">',autor,'</span>',
+                                coalesce(concat('<span class="editorial">',editorial,'</span>'),''),
+              '</p></div>') as insert_libro
+FROM `libros` li
+join noticias_libros nl
+on li.id = nl.id_libro) libros
+on id_noticia = ID
+
+set post_content = concat(insert_libro,post_content)

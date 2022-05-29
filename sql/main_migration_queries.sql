@@ -41,8 +41,10 @@ SELECT COUNT(*) FROM wp_term_relationships rel
 ## Autores como taxonomía: repetir categorías + term_group como "campo comodín"
 */
 
-INSERT  INTO wp_terms(  `name` ,  `term_group` ) 
-SELECT TRIM( CONCAT( coalesce( aut_nombre, '' ) , ' ', coalesce( aut_apellido1, '' ) , ' ', coalesce( aut_apellido2, '' ) ) ) , id_autor
+INSERT  INTO wp_terms(  `name` , slug,  `term_group` ) 
+SELECT TRIM( CONCAT( coalesce( aut_nombre, '' ) , ' ', coalesce( aut_apellido1, '' ) , ' ', coalesce( aut_apellido2, '' ) ) ) 
+, fn_remove_accents(TRIM( CONCAT( coalesce( aut_nombre, '' ) , ' ', coalesce( aut_apellido1, '' ) , ' ', coalesce( aut_apellido2, '' ) ) ))
+, id_autor
 FROM autores;
 
 INSERT  INTO  `wp_term_taxonomy` (  `term_taxonomy_id` ,  `term_id` ,  `taxonomy`  ) 

@@ -1,14 +1,14 @@
-DROP FUNCTION IF EXISTS fn_remove_accents2;
+DROP FUNCTION IF EXISTS fn_remove_accents;
 DELIMITER |
-CREATE FUNCTION fn_remove_accents2( textvalue VARCHAR(10000) ) RETURNS VARCHAR(10000)
+CREATE FUNCTION fn_remove_accents( textvalue VARCHAR(10000) ) RETURNS VARCHAR(10000)
 
 BEGIN
 
     SET @textvalue = textvalue;
 
     -- ACCENTS
-    SET @withaccents = 'ŠšŽžÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÑÒÓÔÕÖØÙÚÛÜÝŸÞàáâãäåæçèéêëìíîïñòóôõöøùúûüýÿþƒñ';
-    SET @withoutaccents = 'SsZzAAAAAAACEEEEIIIINOOOOOOUUUUYYBaaaaaaaceeeeiiiinoooooouuuuyybfn';
+    SET @withaccents = 'ŠšŽžÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÑÒÓÔÕÖØÙÚÛÜÝŸÞàáâãäåæçèéêëìíîïñòóôõöøùúûüýÿþƒñ ';
+    SET @withoutaccents = 'SsZzAAAAAAACEEEEIIIINOOOOOOUUUUYYBaaaaaaaceeeeiiiinoooooouuuuyybfn-';
     SET @count = LENGTH(@withaccents);
 
     WHILE @count > 0 DO
@@ -21,7 +21,7 @@ BEGIN
     SET @count = LENGTH(@special);
     
     WHILE @count > 0 do
-        SET @textvalue = REPLACE(@textvalue, SUBSTRING(@special, @count, 1), '');
+        SET @textvalue = LOWER(REPLACE(@textvalue, SUBSTRING(@special, @count, 1), ''));
         SET @count = @count - 1;
     END WHILE;
 

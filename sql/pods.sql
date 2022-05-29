@@ -25,5 +25,3 @@ SELECT term_id, "twitter", twitter
 FROM `wp_terms` wp, autores mo
 WHERE id_autor = term_group
 AND twitter IS NOT NULL;
-
-update `wp_terms` set slug = lower(fn_remove_accents(name));

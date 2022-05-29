@@ -1,3 +1,5 @@
+-- Resetear el auto increment al número que queramos: ALTER TABLE wp_terms AUTO_INCREMENT = 11;
+
 /*
 # Categorías y posts de noticias
 ## Categorías - Las extraemos con el mismo ID que MO para facilitar futuros joins

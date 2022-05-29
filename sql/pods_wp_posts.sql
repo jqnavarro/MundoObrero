@@ -7,7 +7,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 
-INSERT INTO `wp_posts` (`ID`, `post_author`, `post_date`, `post_date_gmt`, `post_content`, `post_title`, `post_excerpt`, `post_status`, `comment_status`, `ping_status`, `post_password`, `post_name`, `to_ping`, `pinged`, `post_modified`, `post_modified_gmt`, `post_content_filtered`, `post_parent`, `guid`, `menu_order`, `post_type`, `post_mime_type`, `comment_count`) VALUES
+INSERT INTO `wp_posts` (`post_excerpt`, `post_author`, `post_date`, `post_date_gmt`, `post_content`, `post_title`, `post_excerpt`, `post_status`, `comment_status`, `ping_status`, `post_password`, `post_name`, `to_ping`, `pinged`, `post_modified`, `post_modified_gmt`, `post_content_filtered`, `post_parent`, `guid`, `menu_order`, `post_type`, `post_mime_type`, `comment_count`) VALUES
 (34615, 1, '2022-05-16 12:41:01', '2022-05-16 12:41:01', '', 'Descripción autores', '', 'publish', 'closed', 'closed', '', 'descripcion-autores', '', '', '2022-05-29 18:27:45', '2022-05-29 18:27:45', '', 12617, 'http://test.mundoobrero.es/?post_type=_pods_field&#038;p=34615', 7, '_pods_field', '', 0),
 (12619, 1, '2022-01-19 09:20:58', '2022-01-19 09:20:58', 'Número en la edición en papel al que corresponde esta publicación', 'Número', '', 'publish', 'closed', 'closed', '', 'numero', '', '', '2022-05-29 18:27:45', '2022-05-29 18:27:45', '', 12617, 'http://test.mundoobrero.es/?post_type=_pods_field&#038;p=12619', 4, '_pods_field', '', 0),
 (12620, 1, '2022-01-19 09:34:44', '2022-01-19 09:34:44', 'Antetítulo de la publicación', 'Antetítulo', '', 'publish', 'closed', 'closed', '', 'antetitulo', '', '', '2022-05-29 18:27:44', '2022-05-29 18:27:44', '', 12617, 'http://test.mundoobrero.es/?post_type=_pods_field&#038;p=12620', 0, '_pods_field', '', 0),

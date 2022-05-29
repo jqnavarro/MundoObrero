@@ -27,21 +27,3 @@ WHERE id_autor = term_group
 AND twitter IS NOT NULL;
 
 update `wp_terms` set slug = lower(fn_remove_accents(name));
-
-
--- ## Libros
-
-update wp_posts
-join (
-SELECT id_noticia, id_libro, CONCAT('<div id="libros"><p>
-              <img src="http://test.mundoobrero.es/wp-content/uploads/img/libros/',imagen,'" class="attachment-thumbnail size-thumbnail" width="108" height="150">
-                      <span class="titulo">',titulo,'</span>
-                                <span class="autor">',autor,'</span>',
-                                coalesce(concat('<span class="editorial">',editorial,'</span>'),''),
-              '</p></div>') as insert_libro
-FROM `libros` li
-join noticias_libros nl
-on li.id = nl.id_libro) libros
-on id_noticia = ID
-
-set post_content = concat(insert_libro,post_content)

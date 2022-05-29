@@ -15,7 +15,7 @@ FROM wp_terms;
 -- ## Posts - Migración básica para los campos disponibles
 
 INSERT  INTO wp_posts(  `ID` ,  `post_date` ,  `post_date_gmt` ,  `post_content` ,  `post_title` ,  `post_excerpt` ,  `post_status` ,  `comment_status` ,  `ping_status` ,  `post_name` ,  `post_parent` ,  `guid` ,  `menu_order` ,  `post_type` ,  `comment_count` ,  `post_author`  ) 
-SELECT sid, fecha_oculta, fecha_oculta, cuerpo, titulo, entradilla,  "publish",  "closed",  "closed", lower(fn_remove_accents(titulo)) , 0, CONCAT(  'http://preprod.mundoobrero.es/?p=', sid ) , 0,  "post", 0,1
+SELECT sid, fecha_oculta, fecha_oculta, cuerpo, titulo, entradilla,  "publish",  "closed",  "closed", fn_remove_accents(titulo) , 0, CONCAT(  'http://preprod.mundoobrero.es/?p=', sid ) , 0,  "post", 0,1
 FROM mo_noticias;
 
 -- ## Posts a Categorías - Asociación posts-categoría
@@ -41,7 +41,7 @@ SELECT COUNT(*) FROM wp_term_relationships rel
 ## Autores como taxonomía: repetir categorías + term_group como "campo comodín"
 */
 
-INSERT  INTO wp_terms(  `name` , slug,  `term_group` ) 
+INSERT  INTO wp_terms(  `name` , `slug`,  `term_group` ) 
 SELECT TRIM( CONCAT( coalesce( aut_nombre, '' ) , ' ', coalesce( aut_apellido1, '' ) , ' ', coalesce( aut_apellido2, '' ) ) ) 
 , fn_remove_accents(TRIM( CONCAT( coalesce( aut_nombre, '' ) , ' ', coalesce( aut_apellido1, '' ) , ' ', coalesce( aut_apellido2, '' ) ) ))
 , id_autor

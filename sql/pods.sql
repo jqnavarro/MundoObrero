@@ -75,7 +75,16 @@ JOIN wp_posts wp2
 on img_col = REPLACE(wp2.guid, 'http://test.mundoobrero.es/wp-content/uploads/', '')
 and wp2.post_type = "attachment";
 INSERT  INTO wp_termmeta( term_id, meta_key, meta_value ) 
-SELECT term_id,  '_pods_img_columna', concat(  'a:1:{i:0;i:', meta_value,  ';}'  ) ;
+SELECT term_id,  '_pods_img_columna', concat(  'a:1:{i:0;i:', meta_value,  ';}'  ) 
+FROM wp_termmeta
+WHERE meta_key =  'img_columna';
+insert into wp_podsrel (pod_id,field_id,item_id,related_pod_id,related_field_id,related_item_id,weight)
+SELECT post_parent, wp.ID, term_id, 0, 0, meta_value,0
+FROM `wp_posts` wp
+join wp_termmeta tm
+on meta_key = post_name
+WHERE post_name = 'img_columna'
+and post_type = '_pods_field';
 
 
 -- ## Contador de posts en categorias - Reset

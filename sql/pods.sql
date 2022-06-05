@@ -42,9 +42,7 @@ SELECT  DISTINCT id_noticia, term_id, 0
 FROM noticias_autores na, wp_terms wt
 WHERE term_group = id_autor;
 
-/* # Columnas - Trabajando con datos en Pods 
-## Autores como taxonomía: repetir categorías + term_group como "campo comodín"
-*/
+/* # Columnas - Misma técnica que con Autores */
 
 INSERT  INTO wp_terms(  `name` , `slug`,  `term_group`  ) 
 SELECT nombre, lower( fn_remove_accents(nombre)  ), id_columna
@@ -56,12 +54,16 @@ FROM wp_terms te
 LEFT  JOIN wp_term_taxonomy ta ON ta.term_id = te.term_id
 WHERE ta.term_id IS  NULL;
 
+-- Asignar columnas a posts
+
 INSERT  INTO  `wp_term_relationships` ( object_id, term_taxonomy_id, term_order ) 
 SELECT  DISTINCT sid, wt.term_id, 0
 FROM mo_noticias na, wp_terms wt, wp_term_taxonomy ta
 WHERE term_group = columna
 AND ta.term_taxonomy_id = wt.term_id
 AND ta.taxonomy = 'columna';
+
+-- Asignar imágenes
 
 insert into wp_termmeta ( term_id, meta_key, meta_value)
 select tx.term_id, 'img_columna', wp2.ID
@@ -85,7 +87,6 @@ join wp_termmeta tm
 on meta_key = post_name
 WHERE post_name = 'img_columna'
 and post_type = '_pods_field';
-
 
 -- ## Contador de posts en categorias - Reset
 UPDATE wp_term_taxonomy SET count = (
